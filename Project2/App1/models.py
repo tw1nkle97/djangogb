@@ -1,5 +1,8 @@
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 
+
+product_image_storage = FileSystemStorage(location='../media', base_url='/media')
 
 class Client(models.Model):
     name = models.CharField(max_length=100)
@@ -14,6 +17,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     added_date = models.DateField()
+    photo = models.ImageField(storage=product_image_storage, upload_to='product_photos/', blank=True, null=True)
 
 class Order(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
